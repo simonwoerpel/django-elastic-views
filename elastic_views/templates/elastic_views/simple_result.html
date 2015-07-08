@@ -1,0 +1,38 @@
+{% load i18n %}
+
+<h1>{% trans 'Search' %}</h1>
+
+<h2>{% trans 'for' %}: {{ elastic_query }}</h2>
+
+<p>
+    {% trans 'Index' %}: {{ elastic_index }}<br>
+    {% trans 'Total results' %}: {{ total_results }}
+</p>
+<p>Results from {{ range_start }} to {{ range_end }}:</p>
+<ul>
+{% for object in object_list %}
+    <li>
+    {% if object.name and object.get_absolute_url %}
+    <a href="{{ object.get_absolute_url }}">{{ object.name }}</a>
+    {% else %}
+        {{ object }}
+    {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page.has_previous %}
+        <a href="?q={{ elastic_query }}&p={{ page.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page.number }} of {{ page.paginator.num_pages }}.
+        </span>
+
+        {% if page.has_next %}
+        <a href="?q={{ elastic_query }}&p={{ page.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
