@@ -112,6 +112,10 @@ class FakedPaginatedViewMixin(object):
         start = (self.get_page_num()-1) * self.get_paginate_by()
         end = start+self.get_paginate_by()
 
+        # FIXME ("recursive depth max exceeded")
+        # start = min(self.get_paginator().object_list)
+        # end = max(self.get_paginator().object_list)
+
         return (start, end)
 
     @property
